@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div align="center">
+    <h1>Cars Manager</h1>
+    <a href="add">Add Car</a>
+<br/><br/>
+    <table border="1" cellpadding="10">
+
+
+            <thread>
+                <tr >
+                   <th>Car ID</th>
+                 <th>Model</th>
+                    <th>Mark</th>
+                    <th>Colour</th>
+                    <th>Actions</th>
+                </tr>
+            </thread>
+
+
+
+    <tbody>
+<tr th:each="car:${cars}">
+    <td th:text="${car.getId()}"></td>
+    <td th:text="${car.getModel()}"></td>
+    <td th:text="${car.getMark()}"></td>
+    <td th:text="${car.getColour()}"></td>
+    <td>
+        <a th:href="@{'/edit/' + ${car.getId()}} ">Edit</a>
+        <a th:href="@{'/delete/' + ${car.getId()}} ">Delete</a>
+    </td>
+</tr>
+    </tbody>
+    </table>
+
+
+</div>
+
+</body>
+</html>

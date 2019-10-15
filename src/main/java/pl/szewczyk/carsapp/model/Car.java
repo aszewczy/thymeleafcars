@@ -9,6 +9,9 @@ public class Car {
     String model;
     Colour colour;
 
+    public Car() {
+    }
+
     public Car(long id, String mark, String model, Colour colour) {
         this.id = id;
         this.mark = mark;

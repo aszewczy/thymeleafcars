@@ -2,17 +2,17 @@ package pl.szewczyk.carsapp.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pl.szewczyk.carsapp.model.Car;
 import pl.szewczyk.carsapp.service.CarService;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping(value ="/cars")
+@Controller
 public class CarApi {
 
 
@@ -23,54 +23,58 @@ public class CarApi {
         this.carService = carService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Car>> getCars() {
-        return new ResponseEntity<>(carService.getAllCars(), HttpStatus.OK);
+    @RequestMapping("/car")
+    public String getCars(Model model) {
+        List<Car> cars = carService.getAllCars();
+        model.addAttribute("cars",cars);
+        return "car";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable long id) {
-        Optional<Car> carById = carService.getCarById(id);
-        return carById.map(car -> new ResponseEntity<>(car, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    @RequestMapping("/add")
+    public String addCar(Model model) {
+      Car car = new Car();
+      model.addAttribute("car",car);
+      return  "new_car";
+
     }
 
-    @GetMapping("/colour/{colour}")
-    public ResponseEntity<List<Car>> getCarByColour(@PathVariable String colour) {
-        List<Car> carList = carService.getCarsByColor(colour);
-
-        if (!carList.isEmpty()) {
-            return new ResponseEntity<>(carList, HttpStatus.OK);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @RequestMapping("/edit/{id}")
+    public ModelAndView editCar(@PathVariable(name="id") long id) {
+        ModelAndView mav = new ModelAndView("edit_car");
+        Optional<Car> car = carService.getCarById(id);
+         Car c = car.get();
+        mav.addObject("car",c);
+        return  mav;
     }
 
-    @PutMapping
-    ResponseEntity<Car> updateCar(@RequestBody Car car) {
+        @RequestMapping("/save")
+            public String saveCar(@ModelAttribute("car")  Car car){
+           carService.addCar(car);
+            return "redirect:/car";
+    }
+
+    @RequestMapping("/update")
+    public String updateCar(@ModelAttribute("car")  Car car) {
         if (carService.updateCar(car)) {
-            return new ResponseEntity<>(car,HttpStatus.OK);
+            return "redirect:/car";
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return "redirect:/car";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String removeCar(@PathVariable(name="id") long id) {
+        carService.deleteCar(id);
+        return "redirect:/car";
+    }
+
     }
 
 
-    @PostMapping
-    public ResponseEntity addCar(@RequestBody Car car) {
-        if (carService.addCar(car)) {
-            return new ResponseEntity(car,HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 
 
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity removeCar(@PathVariable long id) {
-        if (carService.deleteCar(id)) {
-            return new ResponseEntity(id,HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
-    }
 
 
-}
+
+
+

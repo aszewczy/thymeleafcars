@@ -34,11 +34,6 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getCarsByColor(String colour) {
-        return  carList.stream().filter(car -> colour.equalsIgnoreCase(car.getColour().name())).collect(Collectors.toList());
-    }
-
-    @Override
     public boolean addCar(Car car) {
         return carList.add(car);
     }
