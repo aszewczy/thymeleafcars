@@ -7,16 +7,16 @@ public class Car {
     long id;
     String mark;
     String model;
-    Colour colour;
+    Color color;
 
     public Car() {
     }
 
-    public Car(long id, String mark, String model, Colour colour) {
+    public Car(long id, String mark, String model, Color color) {
         this.id = id;
         this.mark = mark;
         this.model = model;
-        this.colour = colour;
+        this.color = color;
     }
 
 
@@ -44,12 +44,12 @@ public class Car {
         this.model = model;
     }
 
-    public Colour getColour() {
-        return colour;
+    public Color getColor() {
+        return color;
     }
 
-    public void setColour(Colour colour) {
-        this.colour = colour;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Car {
                 "id=" + id +
                 ", mark='" + mark + '\'' +
                 ", model='" + model + '\'' +
-                ", colour='" + colour + '\'' +
+                ", colour='" + color + '\'' +
                 '}';
     }
 }

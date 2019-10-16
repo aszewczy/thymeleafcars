@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <title>Car App</title>
+    <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+          rel="stylesheet"/>
 </head>
 <body>
 
 
 <div align="center">
     <h1>Cars Manager</h1>
-    <a href="add">Add Car</a>
-<br/><br/>
-    <table border="1" cellpadding="10">
+    <a class="btn btn-primary" href="add">Add Car</a>
+    <br/><br/>
+    <table class="table table-striped">
 
 
-            <thread>
-                <tr >
-                   <th>Car ID</th>
-                 <th>Model</th>
-                    <th>Mark</th>
-                    <th>Colour</th>
-                    <th>Actions</th>
-                </tr>
-            </thread>
+        <thread>
+            <tr>
+                <th scope="col">Car ID</th>
+                <th scope="col">Model</th>
+                <th scope="col">Mark</th>
+                <th scope="col">Color</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thread>
 
 
-
-    <tbody>
-<tr th:each="car:${cars}">
-    <td th:text="${car.getId()}"></td>
-    <td th:text="${car.getModel()}"></td>
-    <td th:text="${car.getMark()}"></td>
-    <td th:text="${car.getColour()}"></td>
-    <td>
-        <a th:href="@{'/edit/' + ${car.getId()}} ">Edit</a>
-        <a th:href="@{'/delete/' + ${car.getId()}} ">Delete</a>
-    </td>
-</tr>
-    </tbody>
+        <tbody>
+        <tr scope="row" th:each="car:${cars}">
+            <td th:text="${car.getId()}"></td>
+            <td th:text="${car.getModel()}"></td>
+            <td th:text="${car.getMark()}"></td>
+            <td th:text="${car.getColor()}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{'/edit/' + ${car.getId()}} ">Edit</a>
+                <a class="btn btn-primary" th:href="@{'/delete/' + ${car.getId()}} ">Delete</a>
+            </td>
+        </tr>
+        </tbody>
     </table>
 
 

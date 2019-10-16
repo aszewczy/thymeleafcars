@@ -2,12 +2,11 @@ package pl.szewczyk.carsapp.service;
 
 import org.springframework.stereotype.Service;
 import pl.szewczyk.carsapp.model.Car;
-import pl.szewczyk.carsapp.model.Colour;
+import pl.szewczyk.carsapp.model.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -17,9 +16,9 @@ public class CarServiceImpl implements CarService {
 
     public CarServiceImpl(){
         this.carList = new ArrayList<>();
-        carList.add(new Car(1L,"Opel","Astra", Colour.BLACK));
-        carList.add(new Car(2L,"Audi","A5",Colour.RED));
-        carList.add(new Car(3L,"BMW","e46",Colour.BLUE));
+        carList.add(new Car(1L,"Opel","Astra", Color.BLACK));
+        carList.add(new Car(2L,"Audi","A5", Color.RED));
+        carList.add(new Car(3L,"BMW","e46", Color.BLUE));
     }
 
 
@@ -45,7 +44,7 @@ public class CarServiceImpl implements CarService {
         if(foundCar.isPresent()){
             foundCar.get().setMark(updateCar.getMark());
             foundCar.get().setModel(updateCar.getModel());
-            foundCar.get().setColour(updateCar.getColour());
+            foundCar.get().setColor(updateCar.getColor());
             return true;
         }
 
